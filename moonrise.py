@@ -1,10 +1,22 @@
 import csv
 
-with open("data/Moon_rise_set_2026.csv", newline="") as f:
+
+def time_to_hour(time):
+    hour, minute = time.split(":")
+    return int(hour) + int(minute) / 60
+
+
+with open(
+    "data/Moon_rise_set_2026.csv",
+    newline="",
+    encoding="utf-8-sig"
+) as f:
     reader = csv.DictReader(f)
 
-    row = next(reader)
+    for row in reader:
+        if not row["RISE"]:
+            continue
 
-    print(row)
-    print(row["RISE"])
-    print(type(row["RISE"]))
+        rise = time_to_hour(row["RISE"])
+
+        print(row["YYYY-MM-DD"], rise)
